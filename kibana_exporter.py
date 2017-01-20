@@ -52,8 +52,8 @@ class DataReader(object):
         # print(" ".join(indices))
         indices = slice_indices(indices, start, end)
         last = None
-        done = False
         for name in indices:
+            done = False
             while not done:
                 sys.stderr.write('fetching {} {}\n'.format(name, last))
                 body = {
