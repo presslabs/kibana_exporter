@@ -43,14 +43,14 @@ class DataReader(object):
         if names is GUARD:
             names = self._client.indices.get(index=[self._index_patterns]).keys()
             self._cache['index_names'] = names
-        return sorted(names)
+        return sorted(names, key=lambda name: name[4:] if name.startswith('old-') else name)
 
     def get_documents(self, start=None, end=None, query=None):
         if query is None:
             query = {'match_all': {}}
         indices = self.index_names()
-        # print(" ".join(indices))
         indices = slice_indices(indices, start, end)
+        sys.stderr.write(" ".join(indices) + '\n')
         last = None
         for name in indices:
             done = False
